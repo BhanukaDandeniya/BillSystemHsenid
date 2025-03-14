@@ -1,0 +1,29 @@
+﻿@model List<BillSystemHsenid.Models.Bill>
+@{
+    ViewData["Title"] = "Bills";
+}
+<h2>Bills</h2>
+<a asp-action="Create" class="btn btn-primary">Create New Bill</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Bill Date</th>
+            <th>Subtotal</th>
+            <th>Discount</th>
+            <th>Tax</th>
+            <th>Total Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bill in Model)
+        {
+            <tr>
+                <td>@bill.BillDateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@bill.SubTotal</td>
+                <td>@bill.Discount %</td>
+                <td>@bill.Tax %</td>
+                <td>@bill.TotalAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>

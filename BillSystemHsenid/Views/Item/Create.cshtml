@@ -1,4 +1,4 @@
-﻿@model BillSystemHsenid.Models.Items
+﻿@model BillSystemHsenid.Models.DefineItems
 @{
     ViewData["Title"] = "Create Item";
 }
@@ -6,25 +6,25 @@
 <form typeof="post" asp-action="Create">
         <div class="mt-3">
         <label asp-for="ItemName">Items</label>
-        <input type="text" asp-for="ItemName" class="form-control" />
+        <input asp-for="ItemName" class="form-control" required />
         </div>
         <div class="mt-3">
-            <label asp-for="Quantity">Quantity</label>
-            <input type="number" asp-for="Quantity" class="form-control" />
+            <label asp-for="AvailableQuantity">Quantity</label>
+            <input type="number" asp-for="AvailableQuantity" class="form-control" />
         </div>
         <div class="mt-3">
             <label asp-for="Price">Price</label>
             <input type="number" asp-for="Price" class="form-control" />
         </div>
-        <div class="mt-3">
-            <label asp-for="Amount">Amount</label>
-            <input type="number" asp-for="Amount" class="form-control" />
-        </div>
+        
     <div class="mt-3">
        <button type="submit" class="btn btn-primary">Create</button>
-        <button type="reset" class="btn btn-primary m-2">Clear</button>
+        <button asp-action="Index" class="btn btn-primary m-2">Clear</button>
     </div>
 
 
 
 </form>
+
+
+

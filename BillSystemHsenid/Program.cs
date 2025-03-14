@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IItemRepository,ItemRepository>();
+builder.Services.AddScoped<IBillRepository,BillRepository>();
 
 // Add the connection string for the database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

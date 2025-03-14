@@ -15,38 +15,47 @@ namespace BillSystemHsenid.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var items = await _itemRepository.GetAllItems();
-            return View(items.ToList());
+            try
+            {
+                var items = await _itemRepository.GetAllItems();
+                return View(items.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View(new List<DefineItems>());
+            }
+        
         }
 
-
-        
-
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-           
-            var defineItems = await _itemRepository.getAllDefineItems();
-            ViewBag.DefineItems = defineItems;
-
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Items item)
+        public async Task<IActionResult> Create(DefineItems item)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await _itemRepository.AddNewItem(item);
 
-                return RedirectToAction("Index");
-                
+                if (ModelState.IsValid)
+                {
+                    await _itemRepository.AddNewItem(item);
 
+                    return RedirectToAction("Index");
+
+
+                }
+
+                return View(item);
             }
-
-            return View(item);
-
-
-
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View(item);
+            }
 
         }
 

@@ -4,12 +4,12 @@ namespace BillSystemHsenid.Repository
 {
     public interface IItemRepository
     {
-        public Task<IEnumerable<Items>> GetAllItems();
+        public Task<IEnumerable<DefineItems>> GetAllItems();
 
-        public Task<int> AddNewItem(Items item);
+        public Task<int> AddNewItem(DefineItems item);
 
-        public Task<IEnumerable<DefineItems>> getAllDefineItems();
 
+        
 
     }
 }
