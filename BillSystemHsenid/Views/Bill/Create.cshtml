@@ -39,6 +39,7 @@
                     </option>
                 }
             </select>
+            <small id="itemSelectError" class="text-danger"></small>
         </div>
 
         <div class="col-md-3">
@@ -78,31 +79,42 @@
         <tbody></tbody>
     </table>
 
-
+    <div class="row mt-3 align-items-center">
     <div id="billItemsHidden"></div>
 
-    <div class="form-group mt-2">
+        <div class="col-md-3">
         <label>Subtotal:</label>
         <input type="number" id="subTotal" name="SubTotal" class="form-control" readonly />
     </div>
 
-    <div class="form-group mt-2">
+        <div class="col-md-3">
         <label>Discount (%)</label>
         <input type="number" id="discount" name="Discount" class="form-control" value="0" oninput="calculateTotal()" />
         <small id="discountError" class="text-danger"></small>
     </div>
 
-    <div class="form-group mt-2">
+        <div class="col-md-3">
         <label>Tax (12%)</label>
         <input type="number" id="tax" name="Tax" class="form-control" value="12" readonly />
     </div>
 
-    <div class="form-group mt-2">
+        <div class="col-md-3">
         <label>Total Amount:</label>
         <input type="number" id="totalAmount" name="TotalAmount" class="form-control" readonly />
     </div>
 
+    </div>
+
+    <div class="row mt-3 align-items-center">
+         <div class="col-md-3">
     <button type="submit" class="btn btn-success">Save Bill</button>
+    </div>
+        <div class="col-md-9"></div>
+
+       
+        
+
+    </div>
 </form>
 
 <script>
@@ -119,15 +131,30 @@
     function updateAmount() {
         let price = parseFloat(document.getElementById("itemPrice").value) || 0;
         let quantity = parseInt(document.getElementById("quantity").value) || 1;
+
+        // calculate the amount for quantity of items
         document.getElementById("amount").value = (price * quantity).toFixed(2);
     }
 
+    // Select a item from dropdown
     function addItem() {
         let itemDropdown = document.getElementById("itemDropdown");
+
+         let itemSelectError = document.getElementById("itemSelectError");
         if (itemDropdown.selectedIndex === 0) {
-            alert("Please select an item.");
+
+            itemSelectError.innerText = "Please select an item.";
+           
             return;
+        
+        } else {
+            itemSelectError.innerText = "";
         }
+
+       
+
+
+     
 
         let selectedItem = itemDropdown.options[itemDropdown.selectedIndex].text;
         let selectedItemId = itemDropdown.value;
@@ -173,6 +200,7 @@
         calculateTotal();
     }
 
+    //Calculate the final total of bill
     function calculateTotal() {
         let tableBody = document.getElementById("billItemsTable").getElementsByTagName("tbody")[0];
         let rows = tableBody.rows;
