@@ -1,0 +1,95 @@
+﻿@model List<BillSystemHsenid.Models.Items>
+@{
+    ViewData["Title"] = "Items";
+    var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+    var currentTime = DateTime.Now.ToString("hh:mm tt");
+
+    decimal subTotal = 0;
+
+    @foreach(var item in Model)
+    {
+        subTotal = subTotal + item.Amount;
+    }
+
+    int discount = 0;
+
+    int tax = 12;
+
+
+}
+
+<h3>Items</h3>
+<div class="container">
+    <div class="mt-3">
+    <label class="form-label">Date: @currentDate</label>
+    </div>
+    <div class="mt-3">
+        <label class="form-label">Time: @currentTime</label>
+    </div>
+</div>
+<div class="mt-3">
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>@item.ItemName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+                <td>@item.Amount</td>
+            </tr>
+        }
+    </tbody>
+    
+
+</table>
+<div class="container">
+    <div class="row mt-3 align-items-center">
+        <div class="col-md-3">
+        <label class="form-label">Sub Total: <span id="subTotal"> @subTotal</span> </label>
+
+    </div>
+
+        <div class="col-md-3">
+        <label class="form-label">Discount </label>
+        <input type="number" id="discountInput" class="form-control" value="0" oninput="calculateTotal()" />
+
+    </div>
+        <div class="col-md-3">
+        <label class="form-label">Tax:<span id="tax"> @tax </span> </label>
+       
+    </div>
+        <div class="col-md-3">
+        <label class="form-label">Total: <span id="totalAmount">@subTotal</span></label>
+    </div>
+    </div>
+
+</div>
+<script>
+    function calculateTotal(){
+        let subTotal = parseFloat(document.getElementById("subTotal").textContent);
+        let discount = parseFloat(document.getElementById("discountInput").value) || 0;
+        let taxPercentage = parseFloat(document.getElementById("tax").textContent);
+
+        let discountAmount = (subTotal * discount) / 100;
+
+        let afterDiscountSubTotal = subTotal - discountAmount;
+
+        let taxAmount = (afterDiscountSubTotal * taxPercentage )/100;
+
+        let afterTaxFullAmount = afterDiscountSubTotal + taxAmount;
+
+        document.getElementById("totalAmount").textContent = afterTaxFullAmount.toFixed(2);
+    }
+</script>
